@@ -55,7 +55,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
       preventDuplicates: true,
       progressBar: true
     }),
-    NgxSpinnerModule
+    // NgxSpinnerModule
   ],
   providers: [
     EventoService
