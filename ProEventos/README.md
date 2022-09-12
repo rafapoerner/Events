@@ -4,9 +4,20 @@ Nele pude aprender vários conceitos de criação de uma API em camadas em .Net 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Development server back e front
+
+Para startar o projeto em .Net
+
+dotnet watch run
+
+Irá abrir o Swagger
+
+----------------------------
+Para startar o projeto em Angular
+
+Run `ng serve -o` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
