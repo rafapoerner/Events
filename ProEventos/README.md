@@ -1,4 +1,6 @@
-# ProEventos - Curso da Udemy
+Este projeto foi feito com base em um curso da Udemy.
+
+Nele pude aprender vários conceitos de criação de uma API em camadas em .Net core 5 no Back e no Front utilizei Angular para aprofundar conceitos de componentização.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
 
