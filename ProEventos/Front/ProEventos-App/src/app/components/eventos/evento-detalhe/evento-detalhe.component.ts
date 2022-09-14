@@ -31,4 +31,9 @@ export class EventoDetalheComponent implements OnInit {
       imagemURL: ['', Validators.required],
     });
   }
+
+  public resetForm(): void{
+    this.form.reset();
+  }
+
 }
