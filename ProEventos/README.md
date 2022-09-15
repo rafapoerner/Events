@@ -1,5 +1,5 @@
 # My Event
-[![NPM](https://img.shields.io/npm/l/react)]https://github.com/rafapoerner/Events/blob/master/LICENSE) 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/rafapoerner/Events/blob/master/LICENSE) 
 
 # Sobre o projeto
 
