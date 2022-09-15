@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorFields } from './../../../helpers/ValidatorFields';
 
 @Component({
   selector: 'app-registration',
@@ -18,17 +19,21 @@ export class RegistrationComponent implements OnInit {
     this.validation();
   }
   private validation(): void {
+
+    const formOptions: AbstractControlOptions = {
+      validators: ValidatorFields.MustMatch('senha', 'confirmeSenha')
+    };
     this.form = this.fb.group({
       primeiroNome: ['', Validators.required],
-      ultimoNome: ['',
+      ultimoNome: ['', Validators.required],
+      email: ['',
         [Validators.required, Validators.email]
       ],
-      email: ['', Validators.required],
       userName: ['', Validators.required],
       senha: ['',
         [Validators.required, Validators.minLength(6)]
       ],
       confirmeSenha: ['', Validators.required],
-    });
+    }, formOptions);
   }
 }
