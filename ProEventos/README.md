@@ -38,7 +38,7 @@ dotnet watch run
 
 Pré-requisitos: 
 
-npm versão usada: 6.14.17 
+npm versão usada: 6.14.17  ![npm](https://img.shields.io/npm/v/6)
 
 Angular CLI: 14.2.1
 
