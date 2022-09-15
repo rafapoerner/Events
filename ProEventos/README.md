@@ -1,33 +1,66 @@
-Este projeto foi feito com base em um curso da Udemy.
+# My Event
+[![NPM](https://img.shields.io/npm/l/react)]https://github.com/rafapoerner/Events/blob/master/LICENSE) 
 
-Nele pude aprender vários conceitos de criação de uma API em camadas em .Net core 5 no Back e no Front utilizei Angular para aprofundar conceitos de componentização.
+# Sobre o projeto
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
+Este projeto tem por finalidade criar um evento, seja ele qual for, divulgando palestrantes, vendas de ingresso com lotes, resgistro em Rede Sociais, adicionando
+imagens. A criação e propaganda agiliza seu desepenho e ter um melhor gerenciamento dos eventos criados.
 
+# Tecnologias utilizadas
 
+## Back end
+- ASP.NET Core 5 e Entity Framework Core 5 
+- API RESTful
 
-## Development server -> Back and Front
----------------------------------------
-Para startar o projeto em .Net
+## Front end
+- HTML / SCSS / TypeScript
+- Angular 11 e 12
 
+# Como executar o projeto
+
+## Back end
+Pré-requisitos:
+
+```bash
+# clonar repositório
+git clone https://github.com/rafapoerner/Events
+
+# entrar na pasta do projeto ProEventos
+cd Back
+cd src
+cd ProEventos.API
+
+# executar o projeto 
 dotnet watch run
+```
 
-Irá abrir o Swagger
+## Front end web
 
----------------------------------------
-Para startar o projeto em Angular
+Pré-requisitos: 
 
-Run `ng serve -o` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+npm versão usada: 6.14.17 
 
-## Code scaffolding
+Angular CLI: 14.2.1
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-(Gera um novo componente)
+```bash
 
-## Build
+# entrar na pasta do projeto Front
+cd ProEventos-app
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# instalar dependências
+npm install
 
-## Further help
+# executar o projeto
+npm start ou ng serve -o
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Autor
+
+Rafael Poerner Coutinho
+
+github => https://github.com/rafapoerner
+
+e-mail => rafa_poerner@hotmail.com
+
+
+
