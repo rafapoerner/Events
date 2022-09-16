@@ -73,7 +73,7 @@ defineLocale('pt-br', ptBrLocale);
       preventDuplicates: true,
       progressBar: true
     }),
-    // NgxSpinnerModule
+    NgxSpinnerModule
   ],
   providers: [
     EventoService
