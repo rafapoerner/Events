@@ -53,7 +53,7 @@ namespace ProEventos.API
                 .AddEntityFrameworkStores<ProEventosContext>()
                 .AddDefaultTokenProviders();
 
-            // Configs do JwtBearer
+            // Configs do Jwt Bearer
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {

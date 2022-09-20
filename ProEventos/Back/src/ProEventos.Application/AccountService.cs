@@ -20,31 +20,32 @@ namespace ProEventos.Application
         private readonly IUserPersist _userPersist;
 
         public AccountService(UserManager<User> userManager,
-                                SignInManager<User> signInManager,
-                                IMapper mapper,
-                                IUserPersist userPersist)
+                              SignInManager<User> signInManager,
+                              IMapper mapper,
+                              IUserPersist userPersist)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _userPersist = userPersist;
         }
+
         public async Task<SignInResult> CheckUserPasswordAsync(UserUpdateDto userUpdateDto, string password)
         {
             try
             {
                 var user = await _userManager.Users
-                                            .SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
+                                             .SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
 
                 return await _signInManager.CheckPasswordSignInAsync(user, password, false);
             }
             catch (System.Exception ex)
             {
-                throw new Exception($"Erro ao tentar verificar password. Erro:{ex.Message}");
+                throw new Exception($"Erro ao tentar verificar password. Erro: {ex.Message}");
             }
         }
 
-        public async Task<UserDto> CreateAccountAync(UserDto userDto)
+        public async Task<UserDto> CreateAccountAsync(UserDto userDto)
         {
             try
             {
@@ -56,11 +57,12 @@ namespace ProEventos.Application
                     var userToReturn = _mapper.Map<UserDto>(user);
                     return userToReturn;
                 }
+
                 return null;
             }
             catch (System.Exception ex)
             {
-                throw new Exception($"Erro ao tentar criar conta. Erro:{ex.Message}");
+                throw new Exception($"Erro ao tentar Criar Usuário. Erro: {ex.Message}");
             }
         }
 
@@ -76,7 +78,7 @@ namespace ProEventos.Application
             }
             catch (System.Exception ex)
             {
-                throw new Exception($"Erro ao tentar pegar usuário por UserName. Erro:{ex.Message}");
+                throw new Exception($"Erro ao tentar pegar Usuário por Username. Erro: {ex.Message}");
             }
         }
 
@@ -97,13 +99,15 @@ namespace ProEventos.Application
                 if (await _userPersist.SaveChangesAsync())
                 {
                     var userRetorno = await _userPersist.GetUserByUserNameAsync(user.UserName);
+
                     return _mapper.Map<UserUpdateDto>(userRetorno);
                 }
+
                 return null;
             }
             catch (System.Exception ex)
             {
-                throw new Exception($"Erro ao tentar atualizar Usuário. Erro:{ex.Message}");
+                throw new Exception($"Erro ao tentar atualizar usuário. Erro: {ex.Message}");
             }
         }
 
@@ -116,7 +120,7 @@ namespace ProEventos.Application
             }
             catch (System.Exception ex)
             {
-                throw new Exception($"Erro ao tentar verificar se o Usuário existe. Erro:{ex.Message}");
+                throw new Exception($"Erro ao verificar se usuário existe. Erro: {ex.Message}");
             }
         }
     }

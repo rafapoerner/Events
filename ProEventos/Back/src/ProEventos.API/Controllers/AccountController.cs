@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProEventos.API.Extension;
+// using ProEventos.API.Extensions;
 using ProEventos.Application.Contratos;
 using ProEventos.Application.Dtos;
 
@@ -25,12 +25,13 @@ namespace ProEventos.API.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpGet("GetUser/{userName}")]
+        [HttpGet("GetUser")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetUser(string userName)
+        public async Task<IActionResult> GetUser()
         {
             try
             {
+                var userName = User.GetUserName(); //Usando método de extensão do ClaimPrincipal
                 var user = await _accountService.GetUserByUserNameAsync(userName);
                 return Ok(user);
             }
@@ -41,16 +42,16 @@ namespace ProEventos.API.Controllers
             }
         }
 
-        [HttpPost("RegisterUser")]
+        [HttpPost("Register")]
         [AllowAnonymous]
-        public async Task<IActionResult> RegisterUser(UserDto userDto)
+        public async Task<IActionResult> Register(UserDto userDto)
         {
             try
             {
                 if (await _accountService.UserExists(userDto.UserName))
                     return BadRequest("Usuário já existe");
 
-                var user = await _accountService.CreateAccountAync(userDto);
+                var user = await _accountService.CreateAccountAsync(userDto);
                 if (user != null)
                     return Ok(user);
 
@@ -59,7 +60,7 @@ namespace ProEventos.API.Controllers
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar Usuário. Erro: {ex.Message}");
+                    $"Erro ao tentar Registrar Usuário. Erro: {ex.Message}");
             }
         }
 
@@ -78,14 +79,35 @@ namespace ProEventos.API.Controllers
                 return Ok(new
                 {
                     userName = user.UserName,
-                    PrimeiroNome = user.PrimeiroNome,
+                    PrimeroNome = user.PrimeiroNome,
                     token = _tokenService.CreateToken(user).Result
                 });
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar Usuário. Erro: {ex.Message}");
+                    $"Erro ao tentar realizar Login. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPut("UpdateUser")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateUser(UserUpdateDto userUpdateDto)
+        {
+            try
+            {
+                var user = await _accountService.GetUserByUserNameAsync(User.GetUserName());
+                if (user == null) return Unauthorized("Usuário Inválido");
+
+                var userReturn = await _accountService.UpdateAccount(userUpdateDto);
+                if (userReturn == null) return NoContent();
+
+                return Ok(userReturn);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar Atualizar Usuário. Erro: {ex.Message}");
             }
         }
     }
