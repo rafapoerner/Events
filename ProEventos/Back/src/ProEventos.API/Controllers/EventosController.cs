@@ -4,19 +4,27 @@ using Microsoft.AspNetCore.Mvc;
 using ProEventos.Domain;
 using ProEventos.Application.Contratos;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using ProEventos.Application.Dtos;
+using ProEventos.API.Extension;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProEventos.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EventosController : ControllerBase
     {
         private readonly IEventoService _eventoService;
+        
+        private readonly IAccountService _accountService;
 
-        public EventosController(IEventoService eventoService)
+        public EventosController(IEventoService eventoService,                                 
+                                IAccountService accountService)
         {
-            _eventoService = eventoService;
+            _eventoService = eventoService;            
+            _accountService = accountService;
         }
 
         [HttpGet]
@@ -24,7 +32,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var eventos = await _eventoService.GetAllEventosAsync(true);
+                var eventos = await _eventoService.GetAllEventosAsync(User.GetUserId(), true);
                 if (eventos == null) return NoContent();
 
                 return Ok(eventos);
@@ -41,7 +49,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var eventos = await _eventoService.GetEventoByIdAsync(id, true);
+                var eventos = await _eventoService.GetEventoByIdAsync(User.GetUserId(), id, true);
                 if (eventos == null) return NoContent();
 
                 return Ok(eventos);
@@ -58,7 +66,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var evento = await _eventoService.GetAllEventosByTemaAsync(tema, true);
+                var evento = await _eventoService.GetAllEventosByTemaAsync(User.GetUserId(), tema, true);
                 if (evento == null) return NoContent();
                 return Ok(evento);
             }
@@ -74,7 +82,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var evento = await _eventoService.AddEventos(model);
+                var evento = await _eventoService.AddEventos(User.GetUserId(), model);
                 if (evento == null) return NoContent();
 
                 return Ok(evento);
@@ -91,7 +99,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var evento = await _eventoService.UpdateEvento(id, model);
+                var evento = await _eventoService.UpdateEvento(User.GetUserId(), id, model);
                 if (evento == null) return NoContent();
 
                 return Ok(evento);
@@ -108,10 +116,10 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var evento = await _eventoService.GetEventoByIdAsync(id, true);
+                var evento = await _eventoService.GetEventoByIdAsync(User.GetUserId(), id, true);
                 if(evento == null) return NoContent();
 
-                return await _eventoService.DeleteEvento(id) 
+                return await _eventoService.DeleteEvento(User.GetUserId(), id) 
                     ? Ok(new {message = "Deletado"}) 
                     : throw new Exception("Ocorreu um problema não especificado ao tentar deletar o Evento");
             }
