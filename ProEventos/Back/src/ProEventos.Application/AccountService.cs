@@ -19,10 +19,11 @@ namespace ProEventos.Application
         private readonly IMapper _mapper;
         private readonly IUserPersist _userPersist;
 
-        public AccountService(UserManager<User> userManager,
-                              SignInManager<User> signInManager,
-                              IMapper mapper,
-                              IUserPersist userPersist)
+        public AccountService(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IMapper mapper,
+            IUserPersist userPersist)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -35,7 +36,7 @@ namespace ProEventos.Application
             try
             {
                 var user = await _userManager.Users
-                                             .SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
+                                            .SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
 
                 return await _signInManager.CheckPasswordSignInAsync(user, password, false);
             }
@@ -45,7 +46,7 @@ namespace ProEventos.Application
             }
         }
 
-        public async Task<UserDto> CreateAccountAsync(UserDto userDto)
+        public async Task<UserUpdateDto> CreateAccountAsync(UserDto userDto)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace ProEventos.Application
 
                 if (result.Succeeded)
                 {
-                    var userToReturn = _mapper.Map<UserDto>(user);
+                    var userToReturn = _mapper.Map<UserUpdateDto>(user);
                     return userToReturn;
                 }
 

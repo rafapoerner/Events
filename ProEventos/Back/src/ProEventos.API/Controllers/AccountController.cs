@@ -18,8 +18,9 @@ namespace ProEventos.API.Controllers
         private readonly IAccountService _accountService;
         private readonly ITokenService _tokenService;
 
-        public AccountController(IAccountService accountService,
-                                ITokenService tokenService)
+        public AccountController(
+            IAccountService accountService,
+            ITokenService tokenService)
         {
             _accountService = accountService;
             _tokenService = tokenService;
@@ -53,7 +54,12 @@ namespace ProEventos.API.Controllers
 
                 var user = await _accountService.CreateAccountAsync(userDto);
                 if (user != null)
-                    return Ok(user);
+                    return Ok(new
+                    {
+                        userName = user.UserName,
+                        PrimeroNome = user.PrimeiroNome,
+                        token = _tokenService.CreateToken(user).Result
+                    });
 
                 return BadRequest("Usuário não criado, tente novamente mais tarde!");
             }
